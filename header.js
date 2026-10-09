@@ -1,0 +1,16 @@
+document.writeln(`
+    <div style="display:flex;">
+    <div style="float:left; width: 50%;">
+            <picture>
+                <a href="https://impeccableinsights.com/"><source media=(min-width:650px)" srcset="insightssm.png" alt="Impeccable Insights">
+                <img src="insightssm.png" alt="Impeccable Insights" style="width:200px"></a>
+            </picture><img src="images/canada.png" width="64px;">
+    </div>
+    <div style="float:right; width: 50%;" class="menu">
+        <div><a href="webdev.html">Web Development</a></div>
+        <div><a href="games.html">Games</a></div>
+        <div><a href="contact.html">Contact</a></div>
+    </div>
+    </div>
+    <hr></hr>
+        `);

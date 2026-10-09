@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=0.8" />
+
+<head>
+    <title>Contact Information</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="jquery-3.7.1.min.js"></script>
+    <script src="jquery.validate.min.js"></script>
+    <script src="additional-methods.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        emailjs.init("YOUR_PUBLIC_KEY");
+        $().ready(function () {
+
+            $("[id*=serv]").click(function () {
+                var totalchk = $('input[name="serv"]:checked').length;
+
+                if (totalchk > 0) {
+                    $(".error-message").hide();
+                }
+                else {
+                    $(".error-message").show();
+                }
+            });
+
+            jQuery.validator.addMethod("validate_email", function (value, element) {
+                if (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }, "Please enter a valid Email.");
+
+
+            $('#formy').validate({
+                rules: {
+                    femail: {
+                        required: true,
+                        validate_email: true,
+                    },
+                    fphone: {
+                        required: true,
+                        phoneUS: true,
+                    },
+                    serv: {
+                        required: true,
+                    },
+                },
+            });
+
+            $('#formy').on('submit', function (e) {
+                e.preventDefault();
+
+                const $submitBtn = $('.submity');
+                $submitBtn.prop('disabled', true).val('Sending...'); // Disable and change text
+
+                const formData = {
+                    ffname: document.getElementById('ffname').value,
+                    flname: document.getElementById('flname').value,
+                    femail: document.getElementById('femail').value,
+                    fphone: document.getElementById('fphone').value,
+                    fcompany: document.getElementById('fcomp').value,
+                    selectedService: document.querySelector('input[name="serv"]:checked')?.value || 'None',
+                    fmessa: document.getElementById('fmessa').value,
+                    time: new Date().toLocaleString()
+                };
+
+                emailjs.send('service_kd7ke25', 'template_jduj9vd', formData, 'frLZ0FHC9X2hzBSIE')
+                    .then((response) => {
+                        console.log('SUCCESS!', response.status, response.text);
+                        alert('Message sent successfully!');
+                        $('#formy')[0].reset(); // Optional: clears the form
+                    }, (error) => {
+                        console.log('FAILED...', error);
+                        alert('Failed to send message, please try again.');
+                    })
+                    .finally(() => {
+                        $submitBtn.prop('disabled', false).val('Submit'); // Re-enable button whether it succeeds or fails
+                    });
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+    <script src="header.js"></script>
+    <h1>Contact Information</h1>
+    <h1><a href="mailto:impeccableinsights@gmail.com" target="_blank"><img src="iiemail.png"></a></h1>
+
+    <h1>Contact Via Form</h1>
+    <form id="formy">
+        <div class="cont">
+            <div class="forl">
+                <label for="ffname">First Name:</label><br />
+                <input type="text" id="ffname" name="ffname" value="" required><br>
+            </div>
+            <div class="forr">
+                <label for="flname">Last Name:</label><br />
+                <input type="text" id="flname" name="flname" value=""><br />
+            </div>
+            <div class="forl">
+                <label for="femail">Email:</label><br />
+                <input type="email" id="femail" name="femail" value="" required><br />
+            </div>
+            <div class="forr">
+                <label for="fphone">Phone #:</label><br />
+                <input type="text" id="fphone" name="fphone" value="" required><br />
+            </div>
+            <div class="forl">
+                <label for="fcomp">Company:</label><br />
+                <input type="text" id="fcomp" name="fcomp" value=""><br />
+            </div>
+            <div class="forr">Service Interest:<br />
+                <input type="radio" id="serv1" name="serv" value="Website">
+                <label for="serv1">Website</label><br>
+                <input type="radio" id="serv2" name="serv" value="Survey">
+                <label for="serv2">Game</label><br>
+                <input type="radio" id="serv3" name="serv" value="Both">
+                <label for="serv3">Other</label><br>
+                <label for="serv" class="error">Please provide an answer.</label>
+                </select>
+            </div>
+            <div class="forl">
+                <label for="fmessa">Message:</label><br />
+                <textarea id="fmessa" name="fmessa" required></textarea>
+            </div>
+        </div>
+        <div>
+            <input class="submity" type="submit" value="Submit">
+        </div>
+    </form>
+
+    <div>
+        <script src="footer.js"></script>
+    </div>
+</body>
+
+</html>

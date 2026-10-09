@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Impeccable Insights</title>
+<script src="jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" href="styles.css">
+<script>
+$(document).ready(function(){
+  $("h3:contains(Website)").click(function() {
+    $(".wpp").toggle();
+    if( $(".wpp").is(":hidden")) {
+        $("#ws").text('Website +');
+    }
+    if( $(".wpp").is(":visible")) {
+        $("#ws").text('Website -');
+    }
+  });
+
+  $("h3:contains(Survey)").click(function() {
+    $(".sppp").toggle();
+    if( $(".sppp").is(":hidden")) {
+        $("#sp").text('Survey Programming +');
+    }
+    if( $(".sppp").is(":visible")) {
+        $("#sp").text('Survey Programming -');
+    }
+  });
+});
+</script>
+</head>
+<body>
+    <script src="header.js"></script>
+<h2>Privacy Policy</h2>
+<h3 id="ws">Website -</h3>
+<p class="wpp">There is no personal data collected from the website. Cookies and cache are used to make the website easily accessible to you.</p>
+<h3 id="sp">Games -</h3>
+<ul class="sppp">
+    <li>No personal data is collected</li>
+    <li>Only your scores and game stats are stored</li>
+    <li>There are no ads or upsells in the game</li>
+</ul>
+<div>
+</div>
+<div>
+    <script src="footer.js"></script>
+</div>
+</body>
+</html>
